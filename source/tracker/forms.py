@@ -2,8 +2,6 @@ from django import forms
 
 from tracker.models import Issue
 
-from tracker.models import Status
-
 
 class IssueForm(forms.ModelForm):
     class Meta:
@@ -15,4 +13,6 @@ class IssueForm(forms.ModelForm):
             'status': 'Status',
             'type': 'Type'
         }
-
+        widgets = {
+            'status': forms.CheckboxSelectMultiple(),
+        }

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Issue Add{% endblock %}
+{% block title %}Tracker Add{% endblock %}
 {% block content %}
 
 <div class="container">
     <div class="form">
-        <h1>Add Issue</h1>
+        <h1>Add Tracker</h1>
         <form action="{% url 'issue_add' %}" method="post">
-            {% include 'partial/issue_form.html' with button_text='Create' %}
+            {% include 'partial/issue_form.html' with button_text='Create' button_class="btn btn-success" %}
         </form>
     </div>
 </div>

@@ -61,8 +61,10 @@ class DeleteView(TemplateView):
     template_name = 'issue_confirm_delete.html'
 
     def get_context_data(self, **kwargs):
+        issue = get_object_or_404(Issue, pk=kwargs['pk'])
         context = super().get_context_data(**kwargs)
         context['issue'] = get_object_or_404(Issue, pk=kwargs['pk'])
+        context['form'] = IssueForm(instance=issue)
         return context
 
     def post(self, request, *args, **kwargs):

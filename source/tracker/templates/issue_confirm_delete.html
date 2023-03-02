@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}Issue confirm delete{% endblock %}
+{% block title %}Tracker confirm delete{% endblock %}
 {% block menu %}
 {% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
-        <h1>Are u sure?</h1>
-        <p>{{ issue.summary }}</p>
-        <p>{{ issue.description }}</p>
-        <p>{{ issue.status }}</p>
-        <p>{{ issue.type }}</p>
+        <h1>Are you sure you want to delete the tracker?</h1>
         <form action="{% url 'confirm_delete' issue.pk %}" method="post">
-            {% csrf_token %}
-            <p><input type="submit" value="Удалить"></p>
-            <p><a href="{% url 'index' %}">Отменить</a></p>
+            {% include 'partial/issue_form.html' with button_text='Delete' button_class="btn btn-danger" %}
+        </form>
+        <form action="{% url 'issue_detail' issue.pk %}" method="get">
+            <button type="submit" class="btn btn-secondary">Cancel</button>
         </form>
     </div>
 </div>

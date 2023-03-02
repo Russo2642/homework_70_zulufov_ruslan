@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
-{% block title %}Product{% endblock %}
+{% block title %}Tracker{% endblock %}
 {% block menu %}
-<a href="{% url 'issue_add' %}">Add Issue</a>
-<a href="{% url 'issue_update' issue.pk %}">Update Issue</a>
-<a href="{% url 'issue_delete' issue.pk %}">Delete Issue</a>
+<a href="{% url 'issue_add' %}">Add Tracker</a>
+<a href="{% url 'issue_update' issue.pk %}">Update Tracker</a>
+<a href="{% url 'issue_delete' issue.pk %}">Delete Tracker</a>
 
 {% endblock %}
 {% block content %}
 
 <div class="container">
-    <div class="details">
-        <div class="details-content">
-            <h3>{{ issue.summary }}</h3>
-            <h4>{{ issue.description }}</h4>
-            <h4>{{ issue.status }}</h4>
-            <h5><span>{{ issue.type }}$</span></h5>
+    <div class="form details">
+        <div class="headers">
+            <p>Tracker Name:</p>
+            <p>Tracker Status:</p>
+            <p>Tracker Type:</p>
+            <p>Description:</p>
+        </div>
+        <div>
+            <p>{{ issue.summary }}</p>
+            <p>{{ issue.status }}</p>
+            <p>{{ issue.type }}</p>
+            <p>{{ issue.description }}</p>
         </div>
     </div>
 </div>

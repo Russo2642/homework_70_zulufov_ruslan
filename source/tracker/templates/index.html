@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block menu %}
-    <a href="{% url 'issue_add' %}">Add Issue</a>
+<a href="{% url 'issue_add' %}">Add Tracker</a>
 {% endblock %}
 {% block content %}
-    <h1>Hello World!</h1>
-
+<div class="row">
+    <h1>Issue Tracker</h1>
     {% for issue in issues %}
-    <h2>{{ issue.summary }}</h2>
-    <h2>{{ issue.status }}</h2>
-    <h2>{{ issue.type }}</h2>
-    <p>
-        <a href="{% url 'issue_detail' issue.pk %}">More...</a>
-    </p>
+    <div class="notes">
+        <h2>{{ issue.summary }}</h2>
+        <p>Tracker status: {{ issue.status }}</p>
+        <p>Tracker type: {{ issue.type }}</p>
+        <p>
+            <a href="{% url 'issue_detail' issue.pk %}" class="btn btn-primary read_more">Read More</a>
+        </p>
+    </div>
     {% endfor %}
+</div>
 {% endblock %}
