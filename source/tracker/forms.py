@@ -13,6 +13,3 @@ class IssueForm(forms.ModelForm):
             'status': 'Status',
             'type': 'Type'
         }
-        widgets = {
-            'status': forms.CheckboxSelectMultiple(),
-        }
