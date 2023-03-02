@@ -13,3 +13,7 @@ class IssueForm(forms.ModelForm):
             'status': 'Status',
             'type': 'Type'
         }
+        widgets = {
+            'status': forms.RadioSelect,
+            'type': forms.RadioSelect
+        }
