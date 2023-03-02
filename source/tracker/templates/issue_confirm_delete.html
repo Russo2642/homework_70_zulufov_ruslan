@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Issue confirm delete{% endblock %}
+{% block menu %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Are u sure?</h1>
+        <p>{{ issue.summary }}</p>
+        <p>{{ issue.description }}</p>
+        <p>{{ issue.status }}</p>
+        <p>{{ issue.type }}</p>
+        <form action="{% url 'confirm_delete' issue.pk %}" method="post">
+            {% csrf_token %}
+            <p><input type="submit" value="Удалить"></p>
+            <p><a href="{% url 'index' %}">Отменить</a></p>
+        </form>
+    </div>
+</div>
+{% endblock %}

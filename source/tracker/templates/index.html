@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block menu %}
+    <a href="{% url 'issue_add' %}">Add Issue</a>
+{% endblock %}
+{% block content %}
+    <h1>Hello World!</h1>
+
+    {% for issue in issues %}
+    <h2>{{ issue.summary }}</h2>
+    <h2>{{ issue.status }}</h2>
+    <h2>{{ issue.type }}</h2>
+    <p>
+        <a href="{% url 'issue_detail' issue.pk %}">More...</a>
+    </p>
+    {% endfor %}
+{% endblock %}
