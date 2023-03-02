@@ -16,15 +16,18 @@ class Issue(models.Model):
     )
     status = models.ForeignKey(
         'tracker.Status',
-        related_name='status',
+        related_name='issue',
         on_delete=models.PROTECT,
         verbose_name='Статус'
     )
     type = models.ForeignKey(
         'tracker.Type',
-        related_name='type',
+        related_name='old_issue',
         on_delete=models.PROTECT,
         verbose_name='Тип'
+    )
+    types = models.ManyToManyField(
+        'tracker.Type'
     )
     is_deleted = models.BooleanField(
         verbose_name='Удалено',
