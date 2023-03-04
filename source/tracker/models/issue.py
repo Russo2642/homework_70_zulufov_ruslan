@@ -20,12 +20,6 @@ class Issue(models.Model):
         on_delete=models.PROTECT,
         verbose_name='Статус'
     )
-    type = models.ForeignKey(
-        'tracker.Type',
-        related_name='old_issue',
-        on_delete=models.PROTECT,
-        verbose_name='Тип'
-    )
     types = models.ManyToManyField(
         'tracker.Type'
     )

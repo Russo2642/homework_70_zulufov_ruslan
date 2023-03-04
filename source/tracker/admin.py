@@ -9,10 +9,13 @@ from tracker.models import Status
 
 # Register your models here.
 class IssueAdmin(admin.ModelAdmin):
-    list_display = ('id', 'summary', 'description', 'status', 'type', 'is_deleted', 'created_at')
-    list_filter = ('id', 'summary', 'description', 'status', 'type', 'is_deleted', 'created_at')
+    list_display = ('id', 'summary', 'description', 'get_types', 'status', 'is_deleted', 'created_at')
+    list_filter = ('id', 'summary', 'description', 'status', 'is_deleted', 'created_at')
     search_fields = ('summary', 'status')
     readonly_fields = ('id', 'created_at', 'updated_at')
+
+    def get_types(self, obj):
+        return "\n".join([t.name for t in obj.types.all()])
 
 
 admin.site.register(Issue, IssueAdmin)

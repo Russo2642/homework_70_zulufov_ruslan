@@ -10,7 +10,7 @@
     <div class="notes">
         <h2>{{ issue.summary }}</h2>
         <p>Tracker status: {{ issue.status }}</p>
-        <p>Tracker type: {{ issue.type }}</p>
+        <p>Tracker type: {{ issue.types }}</p>
         <p>
             <a href="{% url 'issue_detail' issue.pk %}" class="btn btn-primary read_more">Read More</a>
         </p>
