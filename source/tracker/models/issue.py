@@ -50,6 +50,10 @@ class Issue(models.Model):
         self.deleted_at = timezone.now()
         self.save()
 
+    def get_types(self):
+        return "\n".join([t.name for t in self.types.all()])
+    get_types.short_description = "Тип"
+
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'

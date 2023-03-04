@@ -14,9 +14,6 @@ class IssueAdmin(admin.ModelAdmin):
     search_fields = ('summary', 'status')
     readonly_fields = ('id', 'created_at', 'updated_at')
 
-    def get_types(self, obj):
-        return "\n".join([t.name for t in obj.types.all()])
-
 
 admin.site.register(Issue, IssueAdmin)
 

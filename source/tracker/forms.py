@@ -15,5 +15,5 @@ class IssueForm(forms.ModelForm):
         }
         widgets = {
             'status': forms.RadioSelect,
-            'types': forms.RadioSelect
+            'types': forms.CheckboxSelectMultiple
         }
