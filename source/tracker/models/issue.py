@@ -52,6 +52,7 @@ class Issue(models.Model):
 
     def get_types(self):
         return "\n".join([t.name for t in self.types.all()])
+
     get_types.short_description = "Тип"
 
     class Meta:

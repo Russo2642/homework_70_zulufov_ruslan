@@ -6,7 +6,8 @@ class Status(models.Model):
         max_length=50,
         null=False,
         blank=False,
-        verbose_name='Статус')
+        verbose_name='Статус'
+    )
 
     def __str__(self):
         return self.name
