@@ -21,7 +21,8 @@ class Issue(models.Model):
         verbose_name='Статус'
     )
     types = models.ManyToManyField(
-        'tracker.Type'
+        'tracker.Type',
+        related_name='issue'
     )
     is_deleted = models.BooleanField(
         verbose_name='Удалено',
