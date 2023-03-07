@@ -1,5 +1,5 @@
 # homework_58_zulufov_ruslan
-Данные админки:\n
+Данные админки:
  Логин - admin
  Пароль - admin
  
