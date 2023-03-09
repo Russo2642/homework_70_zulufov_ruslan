@@ -24,6 +24,12 @@ class Issue(models.Model):
         'tracker.Type',
         related_name='issue'
     )
+    project = models.ForeignKey(
+        'tracker.Project',
+        related_name='issue',
+        on_delete=models.PROTECT,
+        verbose_name='Проект'
+    )
     is_deleted = models.BooleanField(
         verbose_name='Удалено',
         null=False,
@@ -59,4 +65,3 @@ class Issue(models.Model):
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
-        ordering = ['-created_at']
