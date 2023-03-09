@@ -2,8 +2,6 @@ from django.db.models import Q
 from django.utils.http import urlencode
 from django.views.generic import RedirectView, ListView
 
-from tracker.models import Issue
-
 from tracker.forms import SearchForm
 
 from tracker.models import Project

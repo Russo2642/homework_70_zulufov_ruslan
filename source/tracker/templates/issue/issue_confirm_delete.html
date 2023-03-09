@@ -6,7 +6,9 @@
 <div class="container">
     <div class="row">
         <h1>Are you sure you want to delete the tracker?</h1>
-        <form action="{% url 'confirm_delete' issue.pk %}" method="post">
+        <p>Summary: {{ issue.summary }}</p>
+        <p>Description: {{ issue.description }}</p>
+        <form action="{% url 'issue_confirm_delete' issue.pk %}" method="post">
             {% include 'partial/issue_form.html' with button_text='Delete' button_class="btn btn-danger" %}
         </form>
         <form action="{% url 'issue_detail' issue.pk %}" method="get">

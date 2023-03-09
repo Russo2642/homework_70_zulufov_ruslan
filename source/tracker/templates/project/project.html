@@ -18,7 +18,7 @@
         <p>End: Not Indicated</p>
         {% endif %}
     </h1>
-    {% include 'partial/search.html' %}
+
     {% for issue in project.issue.all %}
     <div class="notes">
         <h2>{{ issue.summary }}</h2>
