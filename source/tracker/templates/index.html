@@ -6,6 +6,7 @@
 {% block content %}
 <div class="row">
     <h1>Issue Tracker</h1>
+    {% include 'partial/search.html' %}
     {% for issue in issues %}
     <div class="notes">
         <h2>{{ issue.summary }}</h2>
@@ -15,6 +16,13 @@
             <a href="{% url 'issue_detail' issue.pk %}" class="btn btn-primary read_more">Read More</a>
         </p>
     </div>
+    {% empty %}
+        <h1><p>Issues not found</p></h1>
     {% endfor %}
+    <p></p>
+    <p></p>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
 </div>
 {% endblock %}

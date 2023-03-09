@@ -31,3 +31,7 @@ class IssueForm(forms.ModelForm):
             'status': forms.RadioSelect,
             'types': forms.CheckboxSelectMultiple,
         }
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=20, required=False, label='Найти')
