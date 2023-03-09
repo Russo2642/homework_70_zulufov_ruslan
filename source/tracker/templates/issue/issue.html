@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Tracker{% endblock %}
 {% block menu %}
-<a href="{% url 'issue_add' %}">Add Tracker</a>
+<a href="{% url 'project_add' %}">Add Project</a>
 <a href="{% url 'issue_update' issue.pk %}">Update Tracker</a>
 <a href="{% url 'issue_delete' issue.pk %}">Delete Tracker</a>
 

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Article confirm delete{% endblock %}
+{% block menu %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Delete this project ?</h1>
+    <p>Title: {{ project.title }}</p>
+    <p>Description: {{ project.description }}</p>
+    <p>Start: {{ project.start_date }}</p>
+    {% if project.end_date %}
+        <p>End: {{ project.end_date }}</p>
+    {% else %}
+        <p>End: Not Indicated</p>
+    {% endif %}
+    <form action="{% url 'project_confirm_delete' project.pk %}" method="post">
+            {% include 'partial/issue_form.html' with button_text='Delete' button_class="btn btn-danger" %}
+        </form>
+        <form action="{% url 'project_detail' project.pk %}" method="get">
+            <button type="submit" class="btn btn-secondary">Cancel</button>
+        </form>
+</div>
+{% endblock %}

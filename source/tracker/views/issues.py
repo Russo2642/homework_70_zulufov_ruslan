@@ -1,29 +1,26 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 
 from tracker.forms import IssueForm
 
 from tracker.models import Issue
 
+from tracker.models import Project
 
-class AddView(TemplateView):
-    template_name = 'issue_create.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = IssueForm()
-        return context
+class IssueCreateView(CreateView):
+    model = Issue
+    form_class = IssueForm
+    template_name = 'issue/issue_create.html'
 
-    def post(self, request, *args, **kwargs):
-        form = IssueForm(request.POST)
-        if form.is_valid():
-            issue = form.save()
-            return redirect('issue_detail', pk=issue.pk)
-        return render(request, 'issue_create.html',
-                      context={
-                          'form': form
-                      })
+    def form_valid(self, form):
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        issue = form.save(commit=False)
+        issue.project = project
+        issue.save()
+        form.save_m2m()
+        return redirect('issue_detail', pk=project.pk)
 
 
 class DetailView(TemplateView):

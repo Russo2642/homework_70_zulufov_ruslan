@@ -1,19 +1,13 @@
 from django.db.models import Q
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
-from django.views.generic import DetailView, CreateView
-
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from tracker.forms import ProjectForm, SearchForm
 from tracker.models import Project
-
-from tracker.models import Issue
-
-from tracker.forms import SearchForm
-
-from tracker.forms import ProjectForm
 
 
 class ProjectCreate(CreateView):
-    template_name = 'project_create.html'
+    template_name = 'project/project_create.html'
     model = Project
     form_class = ProjectForm
 
@@ -21,9 +15,8 @@ class ProjectCreate(CreateView):
         return reverse('project_detail', kwargs={'pk': self.object.pk})
 
 
-
 class ProjectDetail(DetailView):
-    template_name = 'project.html'
+    template_name = 'project/project.html'
     model = Project
     ordering = ('-created_at',)
     paginate_by = 10
@@ -55,3 +48,18 @@ class ProjectDetail(DetailView):
         if self.search_value:
             context['query'] = urlencode({'search': self.search_value})
         return context
+
+
+class ProjectUpdate(UpdateView):
+    template_name = 'project/project_update.html'
+    model = Project
+    form_class = ProjectForm
+
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'pk': self.object.pk})
+
+
+class ProjectDeleteView(DeleteView):
+    template_name = 'project/project_confirm_delete.html'
+    model = Project
+    success_url = reverse_lazy('index')

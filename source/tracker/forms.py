@@ -38,6 +38,7 @@ class IssueForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     start_date = forms.DateField(widget=widgets.DateInput(attrs={'type': 'date'}))
     end_date = forms.DateField(widget=widgets.DateInput(attrs={'type': 'date'}), required=False)
+
     class Meta:
         model = Project
         fields = ['title', 'description', 'start_date', 'end_date']

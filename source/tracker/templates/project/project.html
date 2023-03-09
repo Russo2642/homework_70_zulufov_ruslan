@@ -2,11 +2,22 @@
 {% block title %}Home{% endblock %}
 {% block menu %}
 <a href="{% url 'project_add' %}">Add Project</a>
-<a href="{% url 'issue_add' %}">Add Tracker</a>
+<a href="{% url 'project_update' project.pk %}">Update Project</a>
+<a href="{% url 'project_delete' project.pk %}">Delete Project</a>
+<a href="{% url 'issue_add' project.pk %}">Add Tracker</a>
 {% endblock %}
 {% block content %}
 <div class="row">
-    <h1>Issue Tracker</h1>
+    <h1>
+        {{ project.title }}
+        <p>{{ project.description }}</p>
+        <p>Start: {{ project.start_date }}</p>
+        {% if project.end_date %}
+        <p>End: {{ project.end_date }}</p>
+        {% else %}
+        <p>End: Not Indicated</p>
+        {% endif %}
+    </h1>
     {% include 'partial/search.html' %}
     {% for issue in project.issue.all %}
     <div class="notes">
