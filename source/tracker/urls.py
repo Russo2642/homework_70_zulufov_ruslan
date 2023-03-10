@@ -1,13 +1,18 @@
 from django.urls import path
 from tracker.views.base import IndexView, IndexRedirectView
-from tracker.views.issues import IssueCreateView
-from tracker.views.issues import IssueDeleteView
-from tracker.views.issues import IssueDetailView
-from tracker.views.issues import IssueUpdateView
-from tracker.views.projects import ProjectCreate
-from tracker.views.projects import ProjectDeleteView
-from tracker.views.projects import ProjectDetail
-from tracker.views.projects import ProjectUpdate
+from tracker.views.issues import (
+    IssueCreateView,
+    IssueDeleteView,
+    IssueDetailView,
+    IssueUpdateView,
+    IssueIndexView
+)
+from tracker.views.projects import (
+    ProjectCreate,
+    ProjectDeleteView,
+    ProjectDetail,
+    ProjectUpdate
+)
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -17,6 +22,7 @@ urlpatterns = [
     path('project/issue/<int:pk>/update/', IssueUpdateView.as_view(), name='issue_update'),
     path('project/issue/<int:pk>/delete/', IssueDeleteView.as_view(), name='issue_delete'),
     path('project/issue/<int:pk>/confirm_delete/', IssueDeleteView.as_view(), name='issue_confirm_delete'),
+    path('project/issues/', IssueIndexView.as_view(), name='issues'),
     path('project/add/', ProjectCreate.as_view(), name='project_add'),
     path('project/<int:pk>/', ProjectDetail.as_view(), name='project_detail'),
     path('project/<int:pk>/update', ProjectUpdate.as_view(), name='project_update'),

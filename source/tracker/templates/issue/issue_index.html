@@ -2,22 +2,21 @@
 {% block title %}Home{% endblock %}
 {% block menu %}
 <a href="{% url 'project_add' %}">Add Project</a>
-<a href="{% url 'issues' %}">Issues</a>
 {% endblock %}
 {% block content %}
 <div class="row">
-    <h1>Projects</h1>
+    <h1>Issue Trackers</h1>
     {% include 'partial/search.html' %}
-    {% for project in projects %}
+    {% for issue in issues %}
     <div class="notes">
-        <h2>{{ project.title }}</h2>
-        <p>Start date: {{ project.start_date }}</p>
+        <h2>{{ issue.summary }}</h2>
+        <p>Start date: {{ issue.description }}</p>
         <p>
-            <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary read_more">Read More</a>
+            <a href="{% url 'issue_detail' issue.pk %}" class="btn btn-primary read_more">Read More</a>
         </p>
     </div>
     {% empty %}
-        <h1><p>Projects not found</p></h1>
+        <h1><p>Issues not found</p></h1>
     {% endfor %}
     <p></p>
     <p></p>

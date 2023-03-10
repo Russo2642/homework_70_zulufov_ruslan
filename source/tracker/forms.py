@@ -1,10 +1,8 @@
 from django import forms
 from django.forms import widgets
 from tracker.models import Issue
-
-from tracker.models.validators.validator import tracker_summary_validator, tracker_description_validator
-
 from tracker.models import Project
+from tracker.models.validators.validator import tracker_summary_validator, tracker_description_validator
 
 
 class IssueForm(forms.ModelForm):
