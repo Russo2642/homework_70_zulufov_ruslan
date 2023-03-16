@@ -7,12 +7,15 @@ from tracker.forms import IssueForm
 from tracker.forms import SearchForm
 from tracker.models import Issue
 from tracker.models import Project
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 
-class IssueCreateView(CreateView):
+class IssueCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issue/issue_create.html'
+    success_message = 'Статья создана'
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
@@ -63,16 +66,18 @@ class IssueIndexView(ListView):
         return context
 
 
-class IssueUpdateView(UpdateView):
+class IssueUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issue/issue_update.html'
+    success_message = 'Статья обновлена'
 
     def get_success_url(self):
         return reverse('issue_detail', kwargs={'pk': self.object.pk})
 
 
-class IssueDeleteView(DeleteView):
+class IssueDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     template_name = 'issue/issue_confirm_delete.html'
     model = Issue
     success_url = reverse_lazy('index')
+    success_message = 'Статья удалена'

@@ -2,12 +2,15 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from tracker.forms import ProjectForm
 from tracker.models import Project
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 
-class ProjectCreate(CreateView):
+class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     template_name = 'project/project_create.html'
     model = Project
     form_class = ProjectForm
+    success_message = 'Проект создан'
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'pk': self.object.pk})
@@ -19,16 +22,18 @@ class ProjectDetail(DetailView):
     ordering = ('-created_at',)
 
 
-class ProjectUpdate(UpdateView):
+class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'project/project_update.html'
     model = Project
     form_class = ProjectForm
+    success_message = 'Проект обновлён'
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     template_name = 'project/project_confirm_delete.html'
     model = Project
     success_url = reverse_lazy('index')
+    success_message = 'Проект удалён'
