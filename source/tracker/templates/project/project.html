@@ -12,7 +12,7 @@
             <a href="{% url 'issue_add' project.pk %}">Add Tracker</a>
         {% endif %}
         {% if perms.tracker.add_userproject %}
-            <a href="{% url 'project_add_user' project.pk %}">Add User</a>
+            <a href="{% url 'project_add_user' project.pk %}">Add/Delete User</a>
         {% endif %}
     {% endif %}
 {% endblock %}
@@ -41,7 +41,7 @@
     {% for issue in project.issue.all %}
     <div class="notes">
         <h2>{{ issue.summary }}</h2>
-        <p>Start date: {{ issue.description }}</p>
+        <p>Description: {{ issue.description }}</p>
         <p>
             <a href="{% url 'issue_detail' issue.pk %}" class="btn btn-primary read_more">Read More</a>
         </p>

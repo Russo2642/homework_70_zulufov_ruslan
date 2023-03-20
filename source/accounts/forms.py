@@ -33,8 +33,11 @@ class CustomUserCreationForm(forms.ModelForm):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         password_confirm = cleaned_data.get('password_confirm')
+        first_name = cleaned_data.get('first_name')
         if password and password_confirm and password != password_confirm:
             raise forms.ValidationError('Password mismatch')
+        if not first_name:
+            raise forms.ValidationError('First name must be filled')
 
     def save(self, commit=True):
         user = super().save(commit=False)

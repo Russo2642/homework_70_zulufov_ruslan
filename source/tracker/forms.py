@@ -1,8 +1,11 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.forms import widgets
 from tracker.models import Issue
 from tracker.models import Project
 from tracker.models.validators.validator import tracker_summary_validator, tracker_description_validator
+
+from tracker.models import UserProject
 
 
 class IssueForm(forms.ModelForm):
@@ -39,13 +42,12 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'start_date', 'end_date', 'users']
+        fields = ['title', 'description', 'start_date', 'end_date']
         labels = {
             'title': 'Title',
             'description': 'Description',
             'start_date': 'Start Date',
             'end_date': 'End Date',
-            'users': 'User'
         }
 
 
@@ -55,9 +57,18 @@ class SearchForm(forms.Form):
 
 class UserProjectForm(forms.ModelForm):
     # users = forms.CharField(label='User', widget=forms.CheckboxSelectMultiple)
+    # class Meta:
+    #     model = Project
+    #     fields = ['users']
+    #     labels = {
+    #         'users': 'User'
+    #     }
     class Meta:
         model = Project
         fields = ['users']
         labels = {
             'users': 'User'
+        }
+        widgets = {
+            'users': forms.CheckboxSelectMultiple
         }
