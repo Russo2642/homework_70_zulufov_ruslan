@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
@@ -10,10 +10,21 @@ from tracker.models import Issue
 from tracker.models import Project
 
 
-class IssueCreateView(LoginRequiredMixin, CreateView):
+class ManagerLeadGroupPermissionMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.groups.filter(name__in=['admin', 'Project Manager', 'Team Lead']).exists()
+
+
+class ManagerLeadDeveloperGroupPermissionMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.groups.filter(name__in=['admin', 'Project Manager', 'Team Lead', 'Developer']).exists()
+
+
+class IssueCreateView(ManagerLeadDeveloperGroupPermissionMixin, LoginRequiredMixin, CreateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issue/issue_create.html'
+    groups = ['admin', 'Project Manager', 'Team Lead', 'Developer']
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
@@ -64,16 +75,18 @@ class IssueIndexView(ListView):
         return context
 
 
-class IssueUpdateView(LoginRequiredMixin, UpdateView):
+class IssueUpdateView(ManagerLeadDeveloperGroupPermissionMixin, UpdateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issue/issue_update.html'
+    groups = ['admin', 'Project Manager', 'Team Lead', 'Developer']
 
     def get_success_url(self):
         return reverse('issue_detail', kwargs={'pk': self.object.pk})
 
 
-class IssueDeleteView(LoginRequiredMixin, DeleteView):
+class IssueDeleteView(ManagerLeadGroupPermissionMixin, DeleteView):
     template_name = 'issue/issue_confirm_delete.html'
     model = Issue
     success_url = reverse_lazy('index')
+    groups = ['admin', 'Project Manager', 'Team Lead']

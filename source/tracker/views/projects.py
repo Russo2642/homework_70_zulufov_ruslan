@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
@@ -6,15 +6,18 @@ from tracker.forms import ProjectForm
 from tracker.forms import UserProjectForm
 from tracker.models import Project
 
-from tracker.models import UserProject
 
-
-class GroupPermissionMixin(UserPassesTestMixin):
+class ManagerGroupPermissionMixin(UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.groups.filter(name__in=['admin', 'Project Manager', 'Team Lead', 'Developer']).exists()
+        return self.request.user.groups.filter(name__in=['admin', 'Project Manager']).exists()
 
 
-class ProjectCreate(GroupPermissionMixin, SuccessMessageMixin, LoginRequiredMixin, CreateView):
+class ManagerLeadGroupPermissionMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.groups.filter(name__in=['admin', 'Project Manager', 'Team Lead']).exists()
+
+
+class ProjectCreate(ManagerGroupPermissionMixin, SuccessMessageMixin, CreateView):
     template_name = 'project/project_create.html'
     model = Project
     form_class = ProjectForm
@@ -31,7 +34,7 @@ class ProjectDetail(DetailView):
     ordering = ('-created_at',)
 
 
-class ProjectUpdate(GroupPermissionMixin, SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+class ProjectUpdate(ManagerGroupPermissionMixin, SuccessMessageMixin, UpdateView):
     template_name = 'project/project_update.html'
     model = Project
     form_class = ProjectForm
@@ -42,7 +45,7 @@ class ProjectUpdate(GroupPermissionMixin, SuccessMessageMixin, LoginRequiredMixi
         return reverse('project_detail', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(GroupPermissionMixin, SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(ManagerGroupPermissionMixin, SuccessMessageMixin, DeleteView):
     template_name = 'project/project_confirm_delete.html'
     model = Project
     success_url = reverse_lazy('index')
@@ -50,7 +53,7 @@ class ProjectDeleteView(GroupPermissionMixin, SuccessMessageMixin, LoginRequired
     groups = ['admin', 'Project Manager']
 
 
-class UserProjectCreateView(GroupPermissionMixin, LoginRequiredMixin, UpdateView):
+class UserProjectCreateView(ManagerLeadGroupPermissionMixin, UpdateView):
     model = Project
     form_class = UserProjectForm
     template_name = 'project/userproject_create.html'
