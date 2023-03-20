@@ -13,17 +13,17 @@
 <div class="row">
     <h1>Projects</h1>
     {% include 'partial/search.html' %}
-    {% for project in projects %}
-    <div class="notes">
-        <h2>{{ project.title }}</h2>
-        <p>Start date: {{ project.start_date }}</p>
-        <p>
-            <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary read_more">Read More</a>
-        </p>
-    </div>
-    {% empty %}
-    <h1><p>Projects not found</p></h1>
-    {% endfor %}
+        {% for project in projects %}
+        <div class="notes">
+            <h2>{{ project.title }}</h2>
+            <p>Start date: {{ project.start_date }}</p>
+            <p>
+                <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary read_more">Read More</a>
+            </p>
+        </div>
+        {% empty %}
+        <h1><p>Projects not found</p></h1>
+        {% endfor %}
     <p></p>
     <p></p>
     {% if is_paginated %}
