@@ -2,11 +2,21 @@
 {% block title %}Tracker{% endblock %}
 {% block menu %}
     {% if user.is_authenticated %}
+
         {% if perms.tracker.change_issue %}
-            <a href="{% url 'issue_update' issue.pk %}">Update Tracker</a>
+            {% for i in issue.project.userproject_users.all %}
+                {% if i.user.username == user.username %}
+                    <a href="{% url 'issue_update' issue.pk %}">Update Tracker</a>
+                {% endif %}
+            {% endfor %}
         {% endif %}
+
         {% if perms.tracker.delete_issue %}
-            <a href="{% url 'issue_delete' issue.pk %}">Delete Tracker</a>
+            {% for i in issue.project.userproject_users.all %}
+                {% if i.user.username == user.username %}
+                    <a href="{% url 'issue_delete' issue.pk %}">Delete Tracker</a>
+                {% endif %}
+            {% endfor %}
         {% endif %}
     {% endif %}
 
