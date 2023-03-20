@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -40,6 +41,11 @@ class Project(models.Model):
         null=True,
         default=None
     )
+    users = models.ManyToManyField(
+        through='tracker.UserProject',
+        to=User,
+        related_name='projects'
+    )
 
     def __str__(self):
         return f"{self.title} - {self.start_date}"
@@ -48,3 +54,7 @@ class Project(models.Model):
         self.is_deleted = True
         self.deleted_at = timezone.now()
         self.save()
+
+    class Meta:
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'

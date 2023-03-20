@@ -39,14 +39,25 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'start_date', 'end_date']
+        fields = ['title', 'description', 'start_date', 'end_date', 'users']
         labels = {
             'title': 'Title',
             'description': 'Description',
             'start_date': 'Start Date',
-            'end_date': 'End Date'
+            'end_date': 'End Date',
+            'users': 'User'
         }
 
 
 class SearchForm(forms.Form):
-    search = forms.CharField(max_length=20, required=False, label='Найти')
+    search = forms.CharField(max_length=20, required=False, label='Search')
+
+
+class UserProjectForm(forms.ModelForm):
+    # users = forms.CharField(label='User', widget=forms.CheckboxSelectMultiple)
+    class Meta:
+        model = Project
+        fields = ['users']
+        labels = {
+            'users': 'User'
+        }

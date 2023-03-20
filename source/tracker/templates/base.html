@@ -22,9 +22,7 @@
             </li>
             {% block menu %}{% endblock %}
             {% if user.is_authenticated %}
-                <li>
-                    <a href="{% url 'project_add' %}">Add Project</a>
-                </li>
+
                 <li>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}

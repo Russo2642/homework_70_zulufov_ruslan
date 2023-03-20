@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
+{% block menu %}
+{% if user.is_authenticated %}
+    {% if perms.tracker.add_project %}
+        <li>
+            <a href="{% url 'project_add' %}">Add Project</a>
+        </li>
+    {% endif %}
+{% endif %}
+{% endblock %}
 {% block content %}
 <div class="row">
     <h1>Projects</h1>
@@ -13,12 +22,12 @@
         </p>
     </div>
     {% empty %}
-        <h1><p>Projects not found</p></h1>
+    <h1><p>Projects not found</p></h1>
     {% endfor %}
     <p></p>
     <p></p>
     {% if is_paginated %}
-        {% include 'partial/pagination.html' %}
+    {% include 'partial/pagination.html' %}
     {% endif %}
 </div>
 {% endblock %}

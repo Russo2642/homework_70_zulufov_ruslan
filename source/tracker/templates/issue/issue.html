@@ -2,8 +2,12 @@
 {% block title %}Tracker{% endblock %}
 {% block menu %}
     {% if user.is_authenticated %}
-        <a href="{% url 'issue_update' issue.pk %}">Update Tracker</a>
-        <a href="{% url 'issue_delete' issue.pk %}">Delete Tracker</a>
+        {% if perms.tracker.change_issue %}
+            <a href="{% url 'issue_update' issue.pk %}">Update Tracker</a>
+        {% endif %}
+        {% if perms.tracker.delete_issue %}
+            <a href="{% url 'issue_delete' issue.pk %}">Delete Tracker</a>
+        {% endif %}
     {% endif %}
 
 {% endblock %}

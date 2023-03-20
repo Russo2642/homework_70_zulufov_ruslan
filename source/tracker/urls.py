@@ -11,7 +11,8 @@ from tracker.views.projects import (
     ProjectCreate,
     ProjectDeleteView,
     ProjectDetail,
-    ProjectUpdate
+    ProjectUpdate,
+    UserProjectCreateView
 )
 
 urlpatterns = [
@@ -28,4 +29,5 @@ urlpatterns = [
     path('project/<int:pk>/update', ProjectUpdate.as_view(), name='project_update'),
     path('project/<int:pk>/delete/', ProjectDeleteView.as_view(), name='project_delete'),
     path('project/<int:pk>/confirm_delete/', ProjectDeleteView.as_view(), name='project_confirm_delete'),
+    path('project/<int:pk>/add_user', UserProjectCreateView.as_view(), name='project_add_user')
 ]

@@ -1,9 +1,12 @@
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from tracker.forms import ProjectForm
 from tracker.models import Project
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+
+from tracker.forms import UserProjectForm
 
 
 class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -37,3 +40,12 @@ class ProjectDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Project
     success_url = reverse_lazy('index')
     success_message = 'Проект удалён'
+
+
+class UserProjectCreateView(LoginRequiredMixin, UpdateView):
+    model = Project
+    form_class = UserProjectForm
+    template_name = 'project/userproject_create.html'
+
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'pk': self.object.pk})
