@@ -26,6 +26,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+
         {% if perms.tracker.add_userproject %}
             {% for i in project.userproject_users.all %}
                 {% if i.user.username == user.username %}
@@ -33,6 +34,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+
     {% endif %}
 {% endblock %}
 {% block content %}

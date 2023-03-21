@@ -44,7 +44,7 @@ class Project(models.Model):
     users = models.ManyToManyField(
         through='tracker.UserProject',
         to=User,
-        related_name='projects'
+        related_name='projects',
     )
 
     def __str__(self):
